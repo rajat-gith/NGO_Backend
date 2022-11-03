@@ -3,4 +3,5 @@ from .models import *
 # Register your models here.
 
 admin.site.register(Ngo)
-admin.site.register(donor)
+admin.site.register(User)
+admin.site.register(user_donation)

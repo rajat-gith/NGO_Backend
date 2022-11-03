@@ -1,15 +1,13 @@
 from rest_framework.decorators import api_view
-from src import serializer
-from src.models import donor
-from src.serializer import DonorSerializer,UserSerializer,UserSerializerWithToken
+# from src import serializer
+from src.serializer import UserSerializer,UserSerializerWithToken,DonorSerializer
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
-from rest_framework.response import Response
-from django.contrib.auth.models import User
+from rest_framework.response import responses
+from src.models import *
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
-
 from django.contrib.auth.hashers import make_password
 from rest_framework import status
 
@@ -84,26 +82,6 @@ def getUsers(request):
     print("Serializer=>",serializer)
     return Response(serializer.data)
 
-@api_view(['GET'])
-def getDonors(request):
-    donors=donor.objects.all()
-    serializer=DonorSerializer(donors,many=True)
-    return Response(serializer.data)
-
-@api_view(['GET'])
-def getDonorById(request,pk):
-    donor_by_id=donor.objects.get(_id=pk)
-    serializer=DonorSerializer(donor_by_id,many=False)
-    return Response(serializer.data)
-
-@api_view(['GET'])
-@permission_classes([IsAdminUser])
-def getUserById(request, pk):
-    user = donor.objects.get(id=pk)
-    serializer = UserSerializer(user, many=False)
-    return Response(serializer.data)
-
-
 @api_view(['PUT'])
 #@permission_classes([IsAuthenticated])
 def updateUser(request, pk):
@@ -130,3 +108,32 @@ def deleteUser(request, pk):
     userForDeletion.delete()
     return Response('User was deleted')
 
+@api_view(['GET'])
+def getDonors(request):
+    user_donations = user_donation.objects.all()
+    serializer = DonorSerializer(user_donations, many=True)
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+def getDonorInfo(request,pk):
+    user_donations = user_donation.objects.get(_id=pk)
+    serializer = DonorSerializer(user_donations, many=False)
+    return Response(serializer.data)
+
+
+# @api_view(['POST'])
+# def registerDonorInfo(request):
+#     data=request.data
+#     print(data)
+#     try:
+#         user = user_donation.objects.create(
+#             ngo_user=data['name'],
+#             username=data['email'],
+#             email=data['email'],
+#         )
+#         serializer = DonorSerializer(user, many=False)
+#         return Response(serializer.data)
+#     except:
+#         message = {'detail': 'Invalid Entry'}
+#         return Response(message, status=status.HTTP_400_BAD_REQUEST)

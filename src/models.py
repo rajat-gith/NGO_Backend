@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+
 
 class Ngo(models.Model):
     _id=models.AutoField(primary_key=True,editable=False)
@@ -11,24 +13,27 @@ class Ngo(models.Model):
     def __str__(self):
         return self.name
 
-class donor(models.Model):
-    donor=models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
-    ngo_donated=models.ForeignKey(Ngo,on_delete=models.SET_NULL,null=True,related_name="donated")
-    ngo_member=models.ForeignKey(Ngo,on_delete=models.SET_NULL,null=True,related_name="member")
+class User(AbstractUser):
+    # donor=models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
     name=models.CharField(max_length=200,blank=True,null=True)
-    dob=models.DateField(blank=True)
+    dob=models.DateField(null=True,blank=True)
     address=models.TextField(null=True,blank=True)
     city=models.CharField(max_length=200,blank=True,null=True)
     state=models.CharField(max_length=200,blank=True,null=True)
     pincode=models.IntegerField(blank=True,null=True)
-    amount_donated=models.IntegerField(blank=True,null=True)
     father_s_name=models.CharField(max_length=200,null=True,blank=True)
     mother_s_name=models.CharField(max_length=200,null=True,blank=True)
-    donation_message=models.CharField(max_length=200,null=True,blank=True)
-    _id=models.AutoField(primary_key=True,editable=False)
+    # _id=models.AutoField(primary_key=True,editable=False)
 
     def __str__(self):
-        return self.name
+        return self.email
 
-
+class user_donation(models.Model):
+    ngo_user=models.ForeignKey(User,on_delete=models.SET_NULL,null=True,related_name="ngo_donate")
+    ngo_donated=models.ManyToManyField(Ngo,related_name="ngo_donated")
+    ngo_member=models.ManyToManyField(Ngo,related_name="ngo_member")
+    amount_donated=models.IntegerField(blank=True,null=True)
+    _id=models.AutoField(primary_key=True,editable=False)
     
+    def __str__(self):
+        return str(self.ngo_user)

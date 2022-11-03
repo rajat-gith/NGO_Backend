@@ -1,7 +1,6 @@
 from rest_framework import serializers
-from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
-from src.models import Ngo, donor
+from src.models import *
 
 class UserSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField(read_only=True)
@@ -10,7 +9,9 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['id', '_id', 'username', 'email', 'name', 'isAdmin']
+        fields = ['id','_id', 'username', 'email', 'name', 'isAdmin','first_name','last_name','date_joined','dob',
+                    'address','city','state','pincode','father_s_name','mother_s_name'
+        ]
 
     def get__id(self, obj):
         return obj.id
@@ -32,7 +33,9 @@ class UserSerializerWithToken(UserSerializer):
 
     class Meta:
         model = User
-        fields = ['id', '_id', 'username', 'email', 'name', 'isAdmin', 'token']
+        fields = ['id', 'username', 'email', 'name', 'isAdmin','first_name','last_name','date_joined','dob',
+                    'address','city','state','pincode','father_s_name','mother_s_name','token'
+                ]
 
     def get_token(self, obj):
         token = RefreshToken.for_user(obj)
@@ -46,6 +49,10 @@ class NgoSerializer(serializers.ModelSerializer):
 
     
 class DonorSerializer(serializers.ModelSerializer):
+
+    ngo_donated=NgoSerializer(many=True)
+    ngo_member=NgoSerializer(many=True)
+    ngo_user=UserSerializer(many=False)
     class Meta:
-        model=donor
+        model=user_donation
         fields="__all__"
