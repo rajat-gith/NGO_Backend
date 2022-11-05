@@ -9,6 +9,6 @@ urlpatterns=[
     path('',views.getUsers,name="users"),
     path('register/',views.registerUser,name='register'),
     path('donors/',views.getDonors,name="donors"),
-    path('donors/<str:pk>/',views.getDonorInfo,name="donor"),
     path('donors/add/',views.registerDonorInfo,name="register_donors"),
+    path('donors/<str:pk>/',views.getDonorInfo,name="donor"),
 ]
