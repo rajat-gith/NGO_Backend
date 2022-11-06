@@ -129,7 +129,7 @@ DATABASES = {
     }
 }
 
-ALLOWED_HOSTS=['*']
+ALLOWED_HOSTS=['https://ngo-drf-backend.herokuapp.com/']
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
