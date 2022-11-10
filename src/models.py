@@ -10,6 +10,7 @@ class Ngo(models.Model):
     desc=models.TextField(null=True,blank=True)
     ngo_owner=models.CharField(max_length=200,null=True,blank=True)
     startedAt=models.DateTimeField(auto_now_add=True)
+    location=models.CharField(max_length=200,null=True,blank=True)
     def __str__(self):
         return self.name
 
