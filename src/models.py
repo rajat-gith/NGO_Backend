@@ -11,7 +11,8 @@ class Ngo(models.Model):
     ngo_owner=models.CharField(max_length=200,null=True,blank=True)
     startedAt=models.DateTimeField(auto_now_add=True)
     tagline=models.CharField(max_length=200,null=True,blank=True)
-    contact=PhoneNumberField()
+    contact=models.CharField(max_length=200,null=True,blank=True)
+
     
     def __str__(self):
         return self.name
