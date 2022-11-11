@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "src",
     "rest_framework_simplejwt",
-    'drf_yasg'
+    'drf_yasg',
+    "phonenumber_field"
 ]
 
 
