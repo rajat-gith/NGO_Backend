@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     "src",
     "rest_framework_simplejwt",
     'drf_yasg',
-    "phonenumber_field"
+    "phonenumber_field",
 ]
 
 
@@ -121,14 +121,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "base.wsgi.application"
 
-AUTH_USER_MODEL = 'src.User' 
+AUTH_USER_MODEL = 'src.User'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'ngo-backend',
+        'NAME': 'ngo-backend-1',
         'USER': 'postgres',
         'PASSWORD': '123rajatpostgres',
         'HOST': 'localhost',

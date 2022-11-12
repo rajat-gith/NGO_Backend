@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
 from src.models import *
+import pdb
 
 class UserSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField(read_only=True)
@@ -42,6 +43,37 @@ class UserSerializerWithToken(UserSerializer):
         return str(token.access_token)
 
 
+class OwnerSerializer(serializers.ModelSerializer):
+    name = serializers.SerializerMethodField(read_only=True)
+    _id = serializers.SerializerMethodField(read_only=True)
+    
+    class Meta:
+        model = Ngo_Owner
+        fields = ['_id', 'username', 'email', 'name']
+
+    def get__id(self, obj):
+        return obj.id
+
+    def get_name(self, obj):
+        print("Object is=> ",obj.first_name)
+        name = obj.first_name
+        if name == '':
+            name = obj.email
+
+        return name
+
+class OwnerSerializerWithToken(OwnerSerializer):
+    token = serializers.SerializerMethodField(read_only=True)
+
+    class Meta:
+        model = Ngo_Owner
+        fields = fields = ['_id', 'username', 'email', 'name','token']
+
+    def get_token(self, obj):
+        token = RefreshToken.for_user(obj)
+        return str(token.access_token)
+
+
 class NgoSerializer(serializers.ModelSerializer):
     class Meta:
         model=Ngo
@@ -56,3 +88,6 @@ class DonorSerializer(serializers.ModelSerializer):
     class Meta:
         model=user_donation
         fields="__all__"
+
+
+        

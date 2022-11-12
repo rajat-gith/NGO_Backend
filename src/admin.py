@@ -5,3 +5,4 @@ from .models import *
 admin.site.register(Ngo)
 admin.site.register(User)
 admin.site.register(user_donation)
+admin.site.register(Ngo_Owner)

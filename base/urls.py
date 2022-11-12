@@ -13,4 +13,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/ngos/",include('src.urls.ngo_urls')),
     path('api/users/',include('src.urls.donor_urls')),
+    path('api/ngoOwners/',include('src.urls.ngo_owner_urls')),
 ]

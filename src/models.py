@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from phonenumber_field.modelfields import PhoneNumberField
@@ -17,6 +17,7 @@ class Ngo(models.Model):
     def __str__(self):
         return self.name
 
+
 class User(AbstractUser):
     # donor=models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
     name=models.CharField(max_length=200,blank=True,null=True)
@@ -27,10 +28,15 @@ class User(AbstractUser):
     pincode=models.IntegerField(blank=True,null=True)
     father_s_name=models.CharField(max_length=200,null=True,blank=True)
     mother_s_name=models.CharField(max_length=200,null=True,blank=True)
-    # _id=models.AutoField(primary_key=True,editable=False)
 
     def __str__(self):
         return self.email
+
+
+class Ngo_Owner(User):
+    active=models.CharField(max_length=200,null=True,blank=True)
+    def __int__(self):
+        return self._id
 
 class user_donation(models.Model):
     ngo_user=models.ForeignKey(User,on_delete=models.SET_NULL,null=True,related_name="ngo_donate")
