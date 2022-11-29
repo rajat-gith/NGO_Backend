@@ -17,6 +17,7 @@ def getNgo(request,pk):
     serializer=NgoSerializer(ngo,many=False)
     return Response(serializer.data)
 
+
 @api_view(['POST'])
 # @permission_classes([IsAuthenticated])
 def addNgo(request):

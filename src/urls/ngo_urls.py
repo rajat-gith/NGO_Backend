@@ -6,4 +6,5 @@ urlpatterns=[
     path('add/',views.addNgo,name="ngoadd"),
     path('',views.getNgos,name="ngos"),
     path('<str:pk>/',views.getNgo,name="ngo"),
+    path('<str:pk>/',views.getNgo,name="ngo"),
 ]

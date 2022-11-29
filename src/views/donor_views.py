@@ -126,26 +126,31 @@ def getDonorInfo(request,pk):
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def registerDonorInfo(request):
-    user=request.user
-    # print(user)
-    data=request.data
-    # print(1)
-    new_user_donation = user_donation.objects.create(
-            ngo_user=user,
-            amount_donated=data['amount'],   
-    )
-    # pdb.set_trace()
-    for ngo_donated in data['ngo_donated']['_id']:
-        print(ngo_donated)
-        pdb.set_trace()
-        ngo_donated_obj=Ngo.objects.get(_id=ngo_donated)
-        new_user_donation.ngo_donated.add(ngo_donated_obj)
-        print(ngo_donated)
+    try:
+        user=request.user
+        # print(user)
+        data=request.data
+        # print(1)
+        new_user_donation = user_donation.objects.create(
+                ngo_user=user,
+                amount_donated=data['amount'],   
+        )
+        # pdb.set_trace()
+        for ngo_donated in data['ngo_donated']['_id']:
+            print(ngo_donated)
+            pdb.set_trace()
+            ngo_donated_obj=Ngo.objects.get(_id=ngo_donated)
+            new_user_donation.ngo_donated.add(ngo_donated_obj)
+            print(ngo_donated)
 
-    for ngo_member in data['ngo_member']['_id']:
-        ngo_member_obj=Ngo.objects.get(_id=ngo_member)
-        new_user_donation.ngo_member.add(ngo_member_obj)
+        for ngo_member in data['ngo_member']['_id']:
+            ngo_member_obj=Ngo.objects.get(_id=ngo_member)
+            new_user_donation.ngo_member.add(ngo_member_obj)
 
-    serializer = DonorSerializer(new_user_donation, many=False)
-    return Response(serializer.data)
-        
+        serializer = DonorSerializer(new_user_donation, many=False)
+        return Response(serializer.data)
+    except:
+        message = {'detail': 'Some Error Occured'}
+        return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
+
