@@ -135,13 +135,11 @@ def registerDonorInfo(request):
                 ngo_user=user,
                 amount_donated=data['amount'],   
         )
-        # pdb.set_trace()
+        
         for ngo_donated in data['ngo_donated']['_id']:
-            print(ngo_donated)
-            pdb.set_trace()
+
             ngo_donated_obj=Ngo.objects.get(_id=ngo_donated)
             new_user_donation.ngo_donated.add(ngo_donated_obj)
-            print(ngo_donated)
 
         for ngo_member in data['ngo_member']['_id']:
             ngo_member_obj=Ngo.objects.get(_id=ngo_member)
