@@ -3,15 +3,22 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from src.models import *
 import pdb
 
+
+class NgoSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=Ngo
+        fields= '__all__'
+
 class UserSerializer(serializers.ModelSerializer):
     name = serializers.SerializerMethodField(read_only=True)
     _id = serializers.SerializerMethodField(read_only=True)
     isAdmin = serializers.SerializerMethodField(read_only=True)
+    subscribedNgos=NgoSerializer(many=True)
 
     class Meta:
         model = User
         fields = ['id','_id', 'username', 'email', 'name', 'isAdmin','first_name','last_name','date_joined','dob',
-                    'address','city','state','pincode','father_s_name','mother_s_name'
+                    'address','city','state','pincode','father_s_name','mother_s_name','subscribedNgos'
         ]
 
     def get__id(self, obj):
@@ -29,13 +36,15 @@ class UserSerializer(serializers.ModelSerializer):
         return name
 
 
+
 class UserSerializerWithToken(UserSerializer):
     token = serializers.SerializerMethodField(read_only=True)
+    subscribedNgos=NgoSerializer(many=True)
 
     class Meta:
         model = User
         fields = ['id', 'username', 'email', 'name', 'isAdmin','first_name','last_name','date_joined','dob',
-                    'address','city','state','pincode','father_s_name','mother_s_name','token'
+                    'address','city','state','pincode','father_s_name','mother_s_name','token','subscribedNgos'
                 ]
 
     def get_token(self, obj):
@@ -74,10 +83,6 @@ class OwnerSerializerWithToken(OwnerSerializer):
         return str(token.access_token)
 
 
-class NgoSerializer(serializers.ModelSerializer):
-    class Meta:
-        model=Ngo
-        fields= '__all__'
 
     
 class DonorSerializer(serializers.ModelSerializer):

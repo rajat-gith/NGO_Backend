@@ -26,6 +26,7 @@ class User(AbstractUser):
     city=models.CharField(max_length=200,blank=True,null=True)
     state=models.CharField(max_length=200,blank=True,null=True)
     pincode=models.IntegerField(blank=True,null=True)
+    subscribedNgos=models.ManyToManyField(Ngo,blank=True,null=True)
     father_s_name=models.CharField(max_length=200,null=True,blank=True)
     mother_s_name=models.CharField(max_length=200,null=True,blank=True)
 
