@@ -59,6 +59,7 @@ def updateUserProfile(request):
     user.first_name = data['name']
     user.username = data['email']
     user.email = data['email']
+    
 
     if data['password'] != '':
         user.password = make_password(data['password'])
@@ -84,7 +85,20 @@ def getUsers(request):
     return Response(serializer.data)
 
 @api_view(['PUT'])
-#@permission_classes([IsAuthenticated])
+@permission_classes([IsAuthenticated])
+def addSubscribedNgo(request):
+    user=request.user
+    serializer = UserSerializerWithToken(user, many=False)
+    query = request.query_params.get('ngo')
+    subNgoObj=Ngo.objects.get(_id=query)
+    print(subNgoObj)
+    user.subscribedNgos.add(subNgoObj)
+    return Response(serializer.data)
+
+
+
+@api_view(['PUT'])
+@permission_classes([IsAuthenticated])
 def updateUser(request, pk):
     user = User.objects.get(id=pk)
 
@@ -92,8 +106,9 @@ def updateUser(request, pk):
 
     user.first_name = data['name']
     user.username = data['email']
-    user.email = data['email']
-    user.is_staff = data['isAdmin']
+    subNgoObj=Ngo.objects.get(_id=data['subNgo'])
+    # user.email = data['email']
+    user.subscribedNgos=subNgoObj
 
     user.save()
 

@@ -1,6 +1,6 @@
 from rest_framework.decorators import api_view,permission_classes
 from src import serializer
-from src.models import Ngo
+from src.models import Ngo,User
 from src.serializer import NgoSerializer
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
@@ -32,5 +32,7 @@ def addNgo(request):
 
     serializer=NgoSerializer(ngoObject,many=False)
     return Response(serializer.data)
+
+
 
 
