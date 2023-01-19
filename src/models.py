@@ -29,7 +29,8 @@ class User(AbstractUser):
     subscribedNgos=models.ManyToManyField(Ngo,blank=True,null=True)
     father_s_name=models.CharField(max_length=200,null=True,blank=True)
     mother_s_name=models.CharField(max_length=200,null=True,blank=True)
-
+    email=models.CharField(max_length=200,null=True,blank=True)
+    
     def __str__(self):
         return self.email
 
