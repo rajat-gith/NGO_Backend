@@ -83,4 +83,3 @@ def getOwners(request):
 #     userForDeletion = updateOwnerProfile.objects.get(id=pk)
 #     userForDeletion.delete()
 #     return Response('User was deleted')
-

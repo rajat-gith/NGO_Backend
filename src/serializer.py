@@ -5,6 +5,7 @@ import pdb
 
 
 class NgoSerializer(serializers.ModelSerializer):
+    
     class Meta:
         model=Ngo
         fields= '__all__'

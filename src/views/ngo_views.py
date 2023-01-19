@@ -1,19 +1,22 @@
 from rest_framework.decorators import api_view,permission_classes
 from src import serializer
 from src.models import Ngo,User
-from src.serializer import NgoSerializer
+from src.serializer import NgoSerializer,UserSerializer
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 
 @api_view(['GET'])
 def getNgos(request):
-    ngos=Ngo.objects.all()
+    query = request.query_params.get('owner')
+    ngos=Ngo.objects.filter(ngo_owner__icontains=query)
     serializer=NgoSerializer(ngos,many=True)
     return Response(serializer.data)
     
 @api_view(['GET'])
 def getNgo(request,pk):
     ngo=Ngo.objects.get(_id=pk)
+    
+    
     serializer=NgoSerializer(ngo,many=False)
     return Response(serializer.data)
 
