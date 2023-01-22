@@ -12,6 +12,7 @@ class Ngo(models.Model):
     startedAt=models.DateTimeField(auto_now_add=True)
     tagline=models.CharField(max_length=200,null=True,blank=True)
     contact=models.CharField(max_length=200,null=True,blank=True)
+    email=models.CharField(max_length=200,null=True,blank=True)
 
     
     def __str__(self):
