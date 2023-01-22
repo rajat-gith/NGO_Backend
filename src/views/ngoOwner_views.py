@@ -36,7 +36,8 @@ def registerOwner(request):
         first_name=data['name'],
         username=data['email'],
         email=data['email'],
-        password=make_password(data['password'])
+        password=make_password(data['password']),
+        address=data['address']
     )
     print((data['name']))
     serializer = OwnerSerializerWithToken(owner, many=False)
